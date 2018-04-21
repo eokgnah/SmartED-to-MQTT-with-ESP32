@@ -146,7 +146,6 @@ void loop()
       case (0x448):
       if ( rxBuf[0] == 0x0F ){
       HVV = (rxBuf[6] * 0xFF + rxBuf[7])*0.1;
-      HVP = HVV * HVA;
       if ( DEBUG ) { Serial.print("HV Spannung         - "); Serial.print(HVP); Serial.print("   "); Serial.print(HVV); Serial.print("   "); }
       } else {
       if ( DEBUG ) { Serial.print("HV Spannung         - "); Serial.print("ungültiger Wert"); Serial.print("   "); }
@@ -169,7 +168,9 @@ void loop()
       break;
 
       }
-
+      
+      HVP = HVV * HVA;
+      
       if ( DEBUG ) {
       Serial.print("ID: ");                     // Print the message ID.
       Serial.print(rxId, HEX);
