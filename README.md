@@ -1,6 +1,8 @@
 # SmartED-to-MQTT-with-ESP32
 SmartED CAN-BUS Data Sniffer and Sender to MQTT Server over ESP32 WIFI
 
+<img src="https://github.com/eokgnah/SmartED-to-MQTT-with-ESP32/blob/master/SmartED-ESP32.jpg" width="350">
+
 Pin Usage
 
  * MCP2515  = WEMOS ESP32
