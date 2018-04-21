@@ -26,7 +26,7 @@ unsigned char rxBuf[8];
 #define CS 5
 MCP_CAN CAN0(CS);                               
 
-const char* ssid = "WIFI-HOME";
+const char* ssid = "Mobile-WIFI-Hotspot";
 const char* password = "SuperSecurePass";
 
 #define mqtt_server "my.mqtt.server"
