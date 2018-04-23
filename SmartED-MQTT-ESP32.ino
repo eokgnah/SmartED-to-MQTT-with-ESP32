@@ -219,7 +219,7 @@ void loop()
       Serial.printf("ECO Bremsen       : %7.1f %%\n", ECObre );
       Serial.printf("ECO Rollen        : %7.1f %%\n", ECOrol );
       Serial.printf("ECO Beschleunigen : %7.1f %%\n", ECOacc );
-      Serial.printf("Temperatur        : %7.1f C\n", Temperatur );
+      Serial.printf("Temperatur        : %7.1f C\n", TEMPERATUR );
       Serial.println("--");
       }
 
