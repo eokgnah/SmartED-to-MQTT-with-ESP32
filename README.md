@@ -16,7 +16,7 @@ Pin Usage
 
 
 The MQTT-Server recieves something like this:
-data/SmartED *43043*81*66*-411.20*374.60*-1423*88.50*84.50*40.50*32.50*24.50*16.50*
+data/SmartED *43043*81*66*-411.20*374.60*-1423*88.50*84.50*40.50*32.50*24.50*16.50*27.3*15.0*
 
 They are sent every 10sec over the ESP32 WIFI to the MQTT-Server:
 
@@ -34,5 +34,7 @@ The sniffed values are seperated by "*".
 10. ECO Value breaking (%)
 11. ECO Value rolling (%)
 12. ECO Value accelerating (%)
+13. Speed (km/h)
+14 Temperature (°C)
 
 
