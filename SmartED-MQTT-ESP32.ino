@@ -42,6 +42,7 @@ int INTERVALL = 10;    // alle n Sek Werte an den MQTT Server übertragen
 WiFiClient espClient;
 PubSubClient client(espClient);
 
+float               SPEED = 0;             // Speed
 long unsigned int   KILOMETERSTAND = 0;    // km
 unsigned int        RESTREICHWEITE = 0;    // km
 unsigned int        POWERLEVEL = 0;        // 33, 66, 99
@@ -54,6 +55,7 @@ float               ECOall = 0;            // ECO-Wert
 float               ECObre = 0;            // ECO-Wert Bremsen
 float               ECOrol = 0;            // ECO-Wert Rollen
 float               ECOacc = 0;            // ECO-Wert Beschleunigen
+float               TEMPERATUR = 0;        // TEMPERATUR
 
 int TIMER = millis() - 1000 * INTERVALL/2;
 
@@ -124,6 +126,11 @@ void loop()
 
       switch (rxId) {
         
+      case (0x200):
+      SPEED = ((rxBuf[2] * 0xFF) + (rxBuf[3])) / 18;
+      if ( DEBUG ) { Serial.print("Speed               - "); Serial.print(SPEED); Serial.print("   "); }
+      break;
+        
       case (0x412):
       KILOMETERSTAND = (rxBuf[2] * 0xFFFF) + (rxBuf[3] * 0xFF) + rxBuf[4];
       if ( DEBUG ) { Serial.print("Kilometerstand      - "); Serial.print(KILOMETERSTAND); Serial.print("   "); }
@@ -167,6 +174,11 @@ void loop()
       if ( DEBUG ) { Serial.print("realSOC             - "); Serial.print(rSOC); Serial.print("   "); }
       break;
 
+      case (0x408):
+      TEMPERATUR = ((rxBuf[4] - 50 ) - 32 ) / 1.8;      
+      if ( DEBUG ) { Serial.print("TEMPERATUR          - "); Serial.print(TEMPERATUR); Serial.print("   "); }
+      break;
+          
       }
       
       HVP = HVV * HVA;
@@ -194,6 +206,7 @@ void loop()
 
       if ( DEBUG ) {
       Serial.println("Werte werden übertragen");
+      Serial.printf("Speed             : %7.1f km/h\n", SPEED );
       Serial.printf("Kilometerstand    : %7.1u km\n", KILOMETERSTAND );
       Serial.printf("Reichweite        : %7.1u km\n", RESTREICHWEITE );
       Serial.printf("Powerlevel        : %7.1u %%\n", POWERLEVEL );
@@ -206,6 +219,7 @@ void loop()
       Serial.printf("ECO Bremsen       : %7.1f %%\n", ECObre );
       Serial.printf("ECO Rollen        : %7.1f %%\n", ECOrol );
       Serial.printf("ECO Beschleunigen : %7.1f %%\n", ECOacc );
+      Serial.printf("Temperatur        : %7.1f C\n", Temperatur );
       Serial.println("--");
       }
 
@@ -234,6 +248,10 @@ void loop()
       DATENSATZ += String(ECOrol).c_str();
       DATENSATZ += "*";
       DATENSATZ += String(ECOacc).c_str();
+      DATENSATZ += "*";
+      DATENSATZ += String(SPEED).c_str();
+      DATENSATZ += "*";
+      DATENSATZ += String(TEMPERATUR).c_str();
       DATENSATZ += "*";
       
       client.publish(data_topic, String(DATENSATZ).c_str(), true); // Werte zum MQTT-Server senden
