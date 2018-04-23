@@ -127,12 +127,12 @@ void loop()
       switch (rxId) {
         
       case (0x200):
-      SPEED = ((rxBuf[2] * 0xFF) + (rxBuf[3])) / 18;
+      SPEED = ((rxBuf[2] * 256 ) + (rxBuf[3])) / 18;
       if ( DEBUG ) { Serial.print("Speed               - "); Serial.print(SPEED); Serial.print("   "); }
       break;
         
       case (0x412):
-      KILOMETERSTAND = (rxBuf[2] * 0xFFFF) + (rxBuf[3] * 0xFF) + rxBuf[4];
+      KILOMETERSTAND = (rxBuf[2] * 65536 ) + (rxBuf[3] * 256 ) + rxBuf[4];
       if ( DEBUG ) { Serial.print("Kilometerstand      - "); Serial.print(KILOMETERSTAND); Serial.print("   "); }
       break;
       
@@ -152,7 +152,7 @@ void loop()
       
       case (0x448):
       if ( rxBuf[0] == 0x0F ){
-      HVV = (rxBuf[6] * 0xFF + rxBuf[7])*0.1;
+      HVV = (rxBuf[6] * 256 + rxBuf[7]) * 0.1;
       if ( DEBUG ) { Serial.print("HV Spannung         - "); Serial.print(HVP); Serial.print("   "); Serial.print(HVV); Serial.print("   "); }
       } else {
       if ( DEBUG ) { Serial.print("HV Spannung         - "); Serial.print("ungültiger Wert"); Serial.print("   "); }
@@ -160,7 +160,7 @@ void loop()
       break;
       
       case (0x508):
-      HVA = (((rxBuf[2] & 0x3F) * 0xFF + rxBuf[3]) * 0.1) - 819.2; 
+      HVA = (((rxBuf[2] & 0x3F) * 256 + rxBuf[3]) * 0.1) - 819.2; 
       if ( DEBUG ) { Serial.print("HV Strom            - "); Serial.print(HVA); Serial.print("   "); }
       break;
       
@@ -170,7 +170,7 @@ void loop()
       break;
       
       case (0x2D5):
-      rSOC = ((rxBuf[4] & 0x0F) * 0xFF + rxBuf[5])*0.1;      
+      rSOC = ((rxBuf[4] & 0x0F) * 256 + rxBuf[5])*0.1;      
       if ( DEBUG ) { Serial.print("realSOC             - "); Serial.print(rSOC); Serial.print("   "); }
       break;
 
