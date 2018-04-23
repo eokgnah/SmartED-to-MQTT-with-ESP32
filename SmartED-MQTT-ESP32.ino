@@ -202,6 +202,9 @@ void loop()
 
     }
 
+     // if millis() or timer wraps around, we'll just reset it
+     if (TIMER > millis()) TIMER = millis();
+  
      if ( millis() - TIMER > 1000 * INTERVALL ){
 
       if ( DEBUG ) {
